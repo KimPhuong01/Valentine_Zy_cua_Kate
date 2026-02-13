@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Valentine Sweet Love ❤️</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            body {
+                font-family: "Quicksand", sans-serif;
+                background-color: #ffe4e6;
+                background-image: radial-gradient(
+                    #fb7185 0.5px,
+                    transparent 0.5px
+                );
+                background-size: 24px 24px;
+                height: 100vh;
+                margin: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+            }
+
+            .cursive {
+                font-family: "Dancing Script", cursive;
+            }
+
+            /* Hiệu ứng trôi nổi cho các sticker */
+            .floating {
+                animation: floating 3s ease-in-out infinite;
+            }
+            @keyframes floating {
+                0%,
+                100% {
+                    transform: translateY(0px);
+                }
+                50% {
+                    transform: translateY(-15px);
+                }
+            }
+
+            /* Card chính */
+            .main-card {
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 30px;
+                box-shadow: 0 25px 50px -12px rgba(244, 114, 182, 0.5);
+                border: 4px solid #fff;
+                width: 90%;
+                max-width: 450px;
+                position: relative;
+                z-index: 20;
+                padding: 24px 24px;
+                text-align: center;
+            }
+
+            /* Trái tim bay nền */
+            .heart-bg {
+                position: absolute;
+                color: rgba(251, 113, 133, 0.2);
+                pointer-events: none;
+                z-index: 1;
+                animation: fall linear forwards;
+            }
+            @keyframes fall {
+                to {
+                    transform: translateY(100vh) rotate(360deg);
+                }
+            }
+
+            /* Nút Hông Nha - Cải tiến cực mạnh */
+            #noBtn {
+                transition: all 0.2s ease;
+                position: relative;
+                z-index: 50;
+            }
+
+            .btn-primary {
+                background: linear-gradient(45deg, #f43f5e, #fb7185);
+                transition: transform 0.2s;
+            }
+            .btn-primary:hover {
+                transform: scale(1.05);
+                box-shadow: 0 10px 20px rgba(244, 114, 182, 0.4);
+            }
+
+            /* GIF Gấu */
+            .bear-img {
+                width: 180px;
+                height: 180px;
+                margin: 0 auto 1rem;
+                border-radius: 20px;
+                object-fit: cover;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="bg-container"></div>
+
+        <div class="main-card">
+            <!-- Ảnh GIF chú gấu dễ thương -->
+            <div id="bear-container" class="floating">
+                <img
+                    id="main-gif"
+                    src="https://marketplace.canva.com/2nyos/MAG3Cs2nyos/1/tl/canva-cute-cartoon-hamster-MAG3Cs2nyos.png"
+                    alt="Cute Bear"
+                    class="bear-img"
+                />
+            </div>
+            <h2 id="aaa" class="cursive text-4xl text-rose-500 mb-4">
+                Mình ơiiiiii ✨<br />
+            </h2>
+            <h1
+                id="question-text"
+                class="text-xl font-bold text-gray-700 mb-8 leading-tight"
+            >
+                Valentine này mình phải vui vẻ nhaaa? <br />
+                Toai mong Zy hạnh phúc lắm đấyyyy (dù hem ở cạnh toaiii) 🍦🍰
+            </h1>
+
+            <div id="btn-group" class="flex flex-wrap justify-center gap-4">
+                <button
+                    onclick="celebrate()"
+                    class="btn-primary px-8 py-3 text-white font-bold rounded-full shadow-lg"
+                >
+                    Dạ vâng ạ ❤️
+                </button>
+                <button
+                    id="noBtn"
+                    onmouseover="moveButton()"
+                    onclick="moveButton()"
+                    class="px-8 py-3 bg-gray-100 text-gray-500 font-bold rounded-full border-2 border-gray-200"
+                >
+                    Hông chịu 😝
+                </button>
+            </div>
+
+            <!-- Success Content (Hidden) -->
+            <div id="success-content" class="hidden">
+                <h2 class="cursive text-4xl text-rose-500 mb-4">
+                    Chúc mừng <br />
+                    Zy cụa Kate đã chọn đúng 👏
+                </h2>
+                <p class="text-gray-600 mb-6">
+                    Biết ngay là Zy sẽ vui vẻ màaa, <br />
+                    Cười lên nàoooo, gòi chụp tui xemmm ạaa. Zy có bất ngờ hemmmm?
+                </p>
+                <button
+                    onclick="location.reload()"
+                    class="text-rose-400 text-sm underline"
+                >
+                    Nhấn để nói yêu Kate nàooo 😎
+                </button>
+            </div>
+        </div>
+
+        <script>
+            // Tạo hiệu ứng tim bay nền cực nhiều (Animation trang 1)
+            function initHearts() {
+                const container = document.getElementById("bg-container");
+                setInterval(() => {
+                    const heart = document.createElement("div");
+                    heart.className = "heart-bg";
+                    heart.innerHTML = "❤️";
+                    heart.style.left = Math.random() * 100 + "vw";
+                    heart.style.top = "-5vh";
+                    heart.style.fontSize = Math.random() * 20 + 10 + "px";
+                    heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+                    container.appendChild(heart);
+                    setTimeout(() => heart.remove(), 5000);
+                }, 300);
+            }
+
+            // Hàm di chuyển nút "Hông nha" - KHÔNG BAO GIỜ RA KHỎI MÀN HÌNH
+            function moveButton() {
+                const btn = document.getElementById("noBtn");
+                const card = document.querySelector(".main-card");
+
+                // Thiết lập chế độ fixed để bay khắp màn hình
+                btn.style.position = "fixed";
+
+                // Lấy kích thước màn hình hiện tại
+                const viewWidth = window.innerWidth;
+                const viewHeight = window.innerHeight;
+
+                // Kích thước nút
+                const btnWidth = btn.offsetWidth;
+                const btnHeight = btn.offsetHeight;
+
+                // Tính toán vùng an toàn (cách mép 20px)
+                const minX = 20;
+                const minY = 20;
+                const maxX = viewWidth - btnWidth - 20;
+                const maxY = viewHeight - btnHeight - 20;
+
+                // Random vị trí mới
+                let newX = Math.random() * (maxX - minX) + minX;
+                let newY = Math.random() * (maxY - minY) + minY;
+
+                // Kiểm tra nếu vị trí mới đè lên Card chính thì dịch chuyển tiếp
+                const cardRect = card.getBoundingClientRect();
+                if (
+                    newX > cardRect.left - 50 &&
+                    newX < cardRect.right + 50 &&
+                    newY > cardRect.top - 50 &&
+                    newY < cardRect.bottom + 50
+                ) {
+                    newX += 200;
+                    if (newX > maxX) newX -= 400;
+                }
+
+                // ÉP BUỘC VỊ TRÍ (Double check)
+                newX = Math.max(minX, Math.min(newX, maxX));
+                newY = Math.max(minY, Math.min(newY, maxY));
+
+                btn.style.left = newX + "px";
+                btn.style.top = newY + "px";
+
+                // Đổi hình gấu sang mếu máo khi bị từ chối
+                document.getElementById("main-gif").src =
+                    "https://marketplace.canva.com/2nyos/MAG3Cs2nyos/1/tl/canva-cute-cartoon-hamster-MAG3Cs2nyos.png";
+            }
+
+            function celebrate() {
+                // Đổi GIF sang gấu hạnh phúc
+                document.getElementById("main-gif").src =
+                    "https://marketplace.canva.com/2nyos/MAG3Cs2nyos/1/tl/canva-cute-cartoon-hamster-MAG3Cs2nyos.png";
+                // Ẩn câu hỏi và nút
+                document
+                    .getElementById("question-text")
+                    .classList.add("hidden");
+
+                document.getElementById("aaa").classList.add("hidden");
+
+                document.getElementById("btn-group").classList.add("hidden");
+                document
+                    .getElementById("success-content")
+                    .classList.remove("hidden");
+
+                // Bắn pháo hoa
+                const end = Date.now() + 5 * 1000;
+                const colors = ["#f43f5e", "#fb7185", "#ffffff"];
+
+                (function frame() {
+                    confetti({
+                        particleCount: 5,
+                        angle: 60,
+                        spread: 55,
+                        origin: { x: 0 },
+                        colors: colors,
+                    });
+                    confetti({
+                        particleCount: 5,
+                        angle: 120,
+                        spread: 55,
+                        origin: { x: 1 },
+                        colors: colors,
+                    });
+
+                    if (Date.now() < end) {
+                        requestAnimationFrame(frame);
+                    }
+                })();
+            }
+
+            window.onload = initHearts;
+        </script>
+    </body>
+</html>
